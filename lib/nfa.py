@@ -1,7 +1,6 @@
 
 class Epsilon:
 
-
 	def __eq__( self, b ):
 
 		return isinstance( b, Epsilon )
@@ -9,7 +8,7 @@ class Epsilon:
 	
 	def __hash__( self ):
 
-		return hash( repr( self ) )
+		return hash( str( self ) )
 
 
 	def __str__( self ):
@@ -18,14 +17,35 @@ class Epsilon:
 
 	__repr__ = __str__
 
+EPSILON  = Epsilon()
 
+
+class Wildcard:
+
+	def __eq__( self, b ):
+
+		return isinstance( b, Wildcard )
+
+	
+	def __hash__( self ):
+
+		return hash( str( self ) )
+
+
+	def __str__( self ):
+
+		return "wildcard"
+
+	__repr__ = __str__
+
+WILDCARD = Wildcard()
 
 
 class NFA:
 
 	epsilon = Epsilon()
 
-	def __init__( self, states = [], start = None, final = set([]), transitions = {} ):
+	def __init__( self, states = set([]), start = None, final = set([]), transitions = {} ):
 
 		self.states = states
 		self.start  = start
@@ -50,7 +70,7 @@ class NFA:
 
 	def add_state( self, state ):
 
-		self.states.append( state )
+		self.states.add( state )
 
 		self.next_id = max( state, self.next_id ) + 1
 
@@ -79,7 +99,7 @@ class NFA:
 
 			for f in self.final:
 
-				self.add_transition( f, new_state, NFA.epsilon )
+				self.add_transition( f, new_state, EPSILON )
 
 			self.add_state( new_state )
 
@@ -101,13 +121,11 @@ class NFA:
 
 			for a in self.transitions.keys():
 
-				if NFA.epsilon not in self.transitions[a]:
+				if EPSILON not in self.transitions[a]:
 
 					continue
 
-				for b in self.transitions[a][NFA.epsilon]:
-
-					print( b )
+				for b in self.transitions[a][EPSILON]:
 
 					for c in self.transitions.keys():
 
@@ -119,7 +137,7 @@ class NFA:
 
 								self.add_transition( c, b, sym )
 
-				del self.transitions[a][NFA.epsilon]
+				del self.transitions[a][EPSILON]
 
 				epsilon_found = True
 
@@ -158,8 +176,8 @@ if __name__ == '__main__':
 
 	nfa.add_transition( 1, 2, 'a' )
 	nfa.add_transition( 2, 3, 'b' )
-	nfa.add_transition( 2, 1, Epsilon() )
-	nfa.add_transition( 3, 2, Epsilon() )
+	nfa.add_transition( 2, 1, EPSILON )
+	nfa.add_transition( 3, 2, EPSILON )
 
 	nfa.set_start( 1 )
 
