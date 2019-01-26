@@ -93,34 +93,38 @@ class NFA:
 
 	def resolve_epsilons( self ):
 
-		for a in self.transitions.keys():
+		epsilon_found = True
 
-			if NFA.epsilon not in self.transitions[a]:
+		while epsilon_found:
 
-				continue
+			epsilon_found = False
 
-			for b in self.transitions[a][NFA.epsilon]:
+			for a in self.transitions.keys():
 
-				print( b )
+				if NFA.epsilon not in self.transitions[a]:
 
-				for c in self.transitions.keys():
+					continue
 
-					# ( c --sym--> a ) => ( c --sym--> b )
+				for b in self.transitions[a][NFA.epsilon]:
 
-					for sym in self.transitions[c].keys():
+					print( b )
 
-						if a in self.transitions[c][sym]:
+					for c in self.transitions.keys():
 
-							self.add_transition( c, b, sym )
+						# ( c --sym--> a ) => ( c --sym--> b )
 
-			del self.transitions[a][NFA.epsilon]
+						for sym in self.transitions[c].keys():
 
-			# We restart the search
+							if a in self.transitions[c][sym]:
 
-			self.resolve_epsilons()
+								self.add_transition( c, b, sym )
 
-			break
+				del self.transitions[a][NFA.epsilon]
 
+				epsilon_found = True
+
+
+	# Builtins
 
 	def __str__( self ):
 
@@ -142,23 +146,29 @@ class NFA:
 		return ret
 
 
-		
-nfa = NFA()
-nfa.add_state( 1 )
-nfa.add_state( 2 )
-nfa.add_state( 3 )
 
-nfa.add_transition( 1, 2, 'a' )
-nfa.add_transition( 2, 3, 'b' )
-nfa.add_transition( 2, 1, Epsilon() )
-nfa.add_transition( 2, 2, Epsilon() )
 
-nfa.set_start( 1 )
+if __name__ == '__main__':	
+			
+	nfa = NFA()
 
-nfa.make_final( 3 )
+	nfa.add_state( 1 )
+	nfa.add_state( 2 )
+	nfa.add_state( 3 )
 
-nfa.normalize()
+	nfa.add_transition( 1, 2, 'a' )
+	nfa.add_transition( 2, 3, 'b' )
+	nfa.add_transition( 2, 1, Epsilon() )
+	nfa.add_transition( 3, 2, Epsilon() )
 
-print(nfa)
+	nfa.set_start( 1 )
+
+	nfa.make_final( 3 )
+
+	nfa.normalize()
+
+	print(nfa)
+
+
 
 
