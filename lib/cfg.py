@@ -156,6 +156,32 @@ class CFG:
         if not kwargs.get('allow_unit_rules', False):
             self.eliminateUnits()
 
+    def findMember(self):
+        memberDict = {}
+        changed = True
+        while changed:
+            changed = False
+            for lhs, rhsSet in self.productions.items():
+                if lhs in memberDict:
+                    continue
+                for rhs in rhsSet:
+                    member = []
+                    for x in rhs:
+                        if x in memberDict:
+                            member.extend(memberDict[x])
+                        elif isinstance(x, CFG_Nonterm):
+                            member = None
+                            break
+                        else:
+                            member.append(x)
+                    if member != None:
+                        if lhs == self.start:
+                            return member
+                        memberDict[lhs] = member
+                        changed = True
+                        break
+        return None
+
 if __name__ == '__main__':
     class Num:
         def __init__(self):
@@ -169,7 +195,6 @@ if __name__ == '__main__':
         def __eq__(self, other):
             return isinstance(other, Num)
 
-    #'''
     gram = CFG()
     expr = gram.start
     term = gram.addNonterm()
@@ -187,21 +212,10 @@ if __name__ == '__main__':
     gram.addProduction(WS, [WS, '\t'])
     gram.addProduction(WS, [WS, ' '])
     gram.addProduction(WS, [])
-    '''
-    gram = CFG()
-    A = gram.addNonterm()
-    B = gram.addNonterm()
-    C = gram.addNonterm()
-    gram.addProduction(gram.start, [A])
-    gram.addProduction(A, [B])
-    gram.addProduction(B, [C])
-    gram.addProduction(C, [A])
-    gram.addProduction(A, ['a'])
-    gram.addProduction(B, ['b'])
-    gram.addProduction(C, ['c'])
-    '''
 
     print(repr(gram))
+    print(gram.findMember())
 
     gram.convertToCNF()
     print(repr(gram))
+    print(gram.findMember())
