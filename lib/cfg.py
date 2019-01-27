@@ -41,7 +41,8 @@ class CFG:
         assert isinstance(rhs, list)
         if not lhs in self.productions:
             self.productions[lhs] = []
-        self.productions[lhs].append(rhs)
+        if not rhs in self.productions[lhs]:
+            self.productions[lhs].append(rhs)
 
     def __str__(self):
         ret = 'Start: ' + str(self.start) + '\n'
