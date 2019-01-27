@@ -6,7 +6,7 @@ def levenshtein_automata( tokens, k ):
 
 	l = len( tokens )
 
-	nfa = NFA( states = set( range((l+1)*(k+1)) ) )
+	nfa = NFA( states = set(range((l+1)*(k+1))))
 
 	# Insert forward edges
 
@@ -48,7 +48,5 @@ def levenshtein_automata( tokens, k ):
 
 if __name__ == '__main__':
 	
-	print ( levenshtein_automata( "asfhgabcdgsfkhjagsfgashjfgasfgljagsfhjjfghcsaghdghcsdghfasghdfghasfdghasfdghasfdghasfdgasfhgabcdgsfkhjagsfgashjfgasfgljagsfhjjfghcsaghdghcsdghfasghdfghasfdghasfdghasfdghasfdgasfhgabcdgsfkhjagsfgashjfgasfgljagsfhjjfghcsaghdghcsdghfasghdfghasfdghasfdghasfdghasfdgasfhgabcdgsfkhjagsfgashjfgasfgljagsfhjjfghcsaghdghcsdghfasghdfghasfdghasfdghasfdghasfdg", 10 ) )
-
-
+	print ( levenshtein_automata( [1,2,'a'], 2 ) )
 
