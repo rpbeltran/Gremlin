@@ -3,7 +3,7 @@
 
 Levenshtein optimal interpretation of context free grammars for robust semantic analysis
 
-## What is GREMLIN
+## What is GREMLIN?
 
 Gremlin is a big sloppy algorithm. Messy with math its very premise carries a promise of vernacular slosh, as sloshing with promise its very premise carries with it the mess of the murky math it makes away with.
 
@@ -19,7 +19,7 @@ We also strongly hypothesise that Gremlin may be a suitable metric for machine l
 
 The name Gremlin is made by compacting two major and relevant jargons: Grammar-Levenshtein.... loosely.
 
-## But what is it actually doing
+## But what is it actually doing?
 
 Gremlin actually does a few distinct doings; I guess that's why they say little things come in lots of packages.
 
