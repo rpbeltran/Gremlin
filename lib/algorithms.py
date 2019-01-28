@@ -1,5 +1,11 @@
-from cfg import CFG
-from nfa import NFA, WILDCARD
+
+if __name__ == '__main__':
+    from cfg import CFG
+    from nfa import NFA, WILDCARD
+else:
+    from lib.cfg import CFG
+    from lib.nfa import NFA, WILDCARD
+
 
 # CFG intersection of a CFG c and an NFA n
 def intersect(cfg, nfa):

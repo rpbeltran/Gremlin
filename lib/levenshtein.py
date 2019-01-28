@@ -1,12 +1,16 @@
 
-from nfa import NFA, EPSILON, WILDCARD
+if __name__ == '__main__':
+	from nfa import NFA, EPSILON, WILDCARD
+else:
+	from lib.nfa import NFA, EPSILON, WILDCARD
+
 
 
 def levenshtein_automata( tokens, k ):
 
 	l = len( tokens )
 
-	nfa = NFA( states = set(range((l+1)*(k+1))))
+	nfa = NFA( states = set(range((l+1)*(k+1))) )
 
 	# Insert forward edges
 
@@ -48,5 +52,7 @@ def levenshtein_automata( tokens, k ):
 
 if __name__ == '__main__':
 	
-	print ( levenshtein_automata( [1,2,'a'], 2 ) )
+	a = [1,2,'a']
+	print ( levenshtein_automata( a, 5 ) )
+	print ( levenshtein_automata( [1], 0 ) )
 

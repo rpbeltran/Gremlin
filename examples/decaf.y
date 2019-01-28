@@ -5,6 +5,8 @@
 %token   T_New T_NewArray T_Print T_ReadInteger T_ReadLine
 %token   T_Identifier T_StringConstant T_IntConstant T_DoubleConstant T_BoolConstant
 
+%start Program
+
 %%
 
 Program   :    DeclList            { 
@@ -90,7 +92,7 @@ Formals   :    FormalList           { $$ = $1; }
           |    /* empty */          { $$ = new List<VarDecl*>; }
           ;
 
-FormalList:    FormalList ',' Variable  
+FormalList :    FormalList ',' Variable  
                                     { ($$=$1)->Append($3); }
           |    Variable             { ($$ = new List<VarDecl*>)->Append($1); }
           ;
@@ -194,3 +196,5 @@ OptElse   :    T_Else Stmt          { $$ = $2; }
           |    /* empty */
                                     { $$ = NULL; }
           ;
+
+%%

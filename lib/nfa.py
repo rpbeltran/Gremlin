@@ -40,18 +40,19 @@ class Wildcard:
 
 WILDCARD = Wildcard()
 
-
 class NFA:
 
 	epsilon = Epsilon()
 
 	def __init__( self, states = set([]), start = None, final = set([]), transitions = {} ):
 
-		self.states = states
-		self.start  = start
-		self.final  = final
+		from copy import copy
 
-		self.transitions = transitions
+		self.states = copy(states)
+		self.start  = copy(start)
+		self.final  = copy(final)
+
+		self.transitions = copy(transitions)
 
 		self.epsilon_resolved = self.finals_combined = False
 
@@ -186,6 +187,18 @@ if __name__ == '__main__':
 	nfa.normalize()
 
 	print(nfa)
+	print('\n\n')
+
+
+
+
+	nfa2 = NFA()
+
+	nfa2.add_state( 1 )
+	nfa2.add_state( 2 )
+	nfa2.add_state( 3 )
+
+	print(nfa2)
 
 
 
